@@ -1,0 +1,13 @@
+cat > .gitignore << 'EOF'
+.mwaa/
+logs/
+*cfg
+*.db
+--pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+.idea/
+webserver_config.py
+EOF
