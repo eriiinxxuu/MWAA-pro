@@ -62,7 +62,7 @@ def consume_index_logs():
 
         consumer = Consumer(consumer_config)
         es = Elasticsearch(**es_config)
-        topic = 'Erin_Xu_MWAA_logs_prod'
+        topic = 'AWS-MWAA-Production'
         consumer.subscribe([topic])
 
         try:
@@ -148,7 +148,7 @@ dag = DAG (
     schedule='*/5 * * * *',
     start_date=datetime(2026, 1, 18),
     catchup=False,
-    tags=['logs', 'kafka', 'production']
+    tags=['elasticsearch', 'kafka', 'logs']
 )
 
 consume_logs_task = PythonOperator(

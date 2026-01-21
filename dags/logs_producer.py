@@ -77,7 +77,7 @@ def produce_logs(**context):
 
     }
     producer = Producer(kafka_config)
-    topic = 'Erin_Xu_MWAA_logs_prod'
+    topic = 'AWS-MWAA-Production'
 
     for _ in range(15000):
         log = generate_log()
