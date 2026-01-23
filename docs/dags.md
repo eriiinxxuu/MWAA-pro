@@ -1,6 +1,6 @@
 # Producer & Consumer DAG Design
 
-- **Producer DAG** 
+> **Producer DAG** 
 
 The Producer DAG simulates real-world application traffic by generating synthetic access logs and streaming them to Kafka in real time, serving as the upstream source of the log analytics pipeline. \
 To simulate real-world application traffic, the system includes a `log producer component` that generates synthetic web access logs. \
@@ -24,7 +24,7 @@ Each log entry is formatted into a single text line following a structure simila
 ```
 Once generated, log messages are published directly to Kafka from within the Airflow task using Kafka producer APIs.
 
-- **Consumer DAG** 
+> **Consumer DAG** 
 
 Consumes Kafka messages and indexes them into Elasticsearch using bulk writes. However, the Consumer DAG performs a log parsing and normalization step before indexing data into Elasticsearch. \
 Kafka messages are received as raw log strings, which are not suitable for structured querying or analytics. To address this, each log entry is parsed using a regular expression that extracts key fields such as IP address, HTTP method, endpoint, status code, response size, referrer, and user-agent. \
