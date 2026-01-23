@@ -32,21 +32,32 @@ If DAGs fail to appear in the Airflow UI or cannot be parsed, `CloudWatch logs` 
 
 ### 3. Validating DAG Execution in MWAA
 
-Once the MWAA environment is ready:
+Once the MWAA environment is ready and the DAG code is valid:
+
+> 📌 Screenshot: MWAA Environment is ready!
+> ![mwaa_env](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/airflow_env_mwaa.png)
 
 - DAGs should appear automatically in the **Airflow UI**
+
+> 📌 Screenshot: DAGs in airflow
+> ![airflow_dag](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/airflow_DAG_mwaa.png)
+
 - Trigger workflows to validate end-to-end execution:
   - Producer DAG → publishes logs to Kafka
   - Consumer DAG → consumes Kafka logs and indexes into Elasticsearch
 
-> 📌 Screenshot: Successful Kafka produce / consume and Elasticsearch indexing results  
-> ![Kafka & ES results](Images/<your_kafka_es_result_image>.png)
+> 📌 Screenshot: Logs successfully produced to the `AWS-MWAA-Production` Kafka topic
+> ![Kafka_logs](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/kafka_overview.png)
 
----
+> 📌 Screenshot: Logs successfully consumed from Kafka and indexed into Elasticsearch (`aws-mwaa-production` index)
+> ![es_index](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/es_messages.png)
 
-### Step 4 — Querying logs in Elasticsearch
 
-Elasticsearch provides powerful search and aggregation capabilities over indexed log documents.
+### 4. Querying and Analyzing Logs in Elasticsearch
+
+Once logs are indexed into Elasticsearch, powerful search and aggregation capabilities become available for analysis.
+
+Typical use cases include:
 
 #### Example 1 — Find logs where `status = 500` and `endpoint = /services`
 
@@ -56,9 +67,68 @@ GET aws-mwaa-production/_search
   "query": {
     "bool": {
       "filter": [
-        { "term": { "status.keyword": "500" } },
-        { "term": { "endpoint.keyword": "/services" } }
+        { "term": { "endpoint.keyword": "/services" } },
+        { "term": { "status.keyword": "500" } }
       ]
+    }
+  },
+  "sort": [
+    { "timestamp": "desc" }
+  ],
+  "size": 50
+}
+```
+#### Example 2 — Find top N `endpoints` generating the most errors (`status = 500`)
+This aggregation enables quick identification of problematic endpoints and is commonly used for error rate analysis and operational troubleshooting.
+
+```json
+GET aws-mwaa-production/_search
+{
+  "size": 0,
+  "query": {
+    "term": { "status.keyword": "500" }
+  },
+  "aggs": {
+    "top_endpoints": {
+      "terms": {
+        "field": "endpoint.keyword",
+        "size": 3
+      }
     }
   }
 }
+```
+
+#### Example 3 — Aggregate log documents by time using a date histogram where `status = 500`
+This aggregation enables real-time monitoring of error trends and helps identify spikes or anomalies in system behavior.
+
+```json
+GET aws-mwaa-production/_search
+{
+  "size": 0,
+  "query": {
+    "term": { "status.keyword": "500" }
+  },
+  "aggs": {
+    "per_minute": {
+      "date_histogram": {
+        "field": "timestamp",
+        "fixed_interval": "1m"
+      }
+    }
+  }
+}
+```
+These queries enable real-time observability and analytics over streaming log data.
+
+### 5. Continuous Delivery Behavior
+
+MWAA continuously monitors the configured S3 locations for DAG and dependency updates.
+Any subsequent code changes pushed to GitHub are:
+
+- Automatically synchronized to Amazon S3 via GitHub Actions
+- Detected by MWAA without manual intervention
+- Reflected in the Airflow environment as updated DAG definitions
+
+This setup enables continuous delivery of Airflow workflows while maintaining a clear separation between development, deployment, and runtime execution.
+
