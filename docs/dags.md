@@ -1,8 +1,22 @@
-## Producer & Consumer DAG Design
+# Producer & Consumer DAG Design
 
 - **Producer DAG** 
 
 The Producer DAG simulates real-world application traffic by generating synthetic access logs and streaming them to Kafka in real time, serving as the upstream source of the log analytics pipeline. \
+To simulate real-world application traffic, the system includes a `log producer component` that generates synthetic web access logs. \
+Logs are programmatically created using the `Faker` library combined with randomized request attributes, allowing the pipeline to be tested without relying on real production data. \
+Each generated log entry represents a single HTTP request and includes the following fields: 
+
+- **IP address** – randomly generated IPv4 address
+- **Timestamp** – current event time at log generation
+- **HTTP method** – `GET`, `POST`, `PUT`, or `DELETE`
+- **Request endpoint** – representative API and web paths (e.g. `/api/users`, `/services`)
+- **HTTP status code** – covering successful, redirect, client error, and server error scenarios
+- **Response size** – simulated payload size in bytes
+- **Referrer** – simulated traffic source (e.g. search engines or direct access)
+- **User-Agent** – common browser and device signatures
+
+
 Each log entry is formatted into a single text line following a structure similar to common access log formats: 
 
 ```text

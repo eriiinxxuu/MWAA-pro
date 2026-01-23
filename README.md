@@ -1,5 +1,6 @@
 # Realtime Logs Processing with Apache Airflow (AWS MWAA), Kafka and Elasticsearch
 
+> Apache Airflow (MWAA) · Kafka · Elasticsearch · CI/CD
 
 ## 📚 Introduction
 
@@ -80,6 +81,7 @@ Any code changes pushed to GitHub are automatically synchronized to S3 via GitHu
 - [System Architecture Details](docs/architecture.md)
 - [Producer & Consumer DAG Design](docs/dags.md)
 - [Local Development Guide](docs/local-airflow-testing.md)
+- [CI/CD pipeline](docs/cicd.md)
 - [AWS MWAA Environment](docs/mwaa_env.md)
 
 

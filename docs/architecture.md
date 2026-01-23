@@ -6,7 +6,6 @@ This project implements a real-time log processing architecture that supports lo
 
 The system is designed around Apache Airflow as the orchestration layer, Apache Kafka as the streaming backbone, and Elasticsearch as the analytics and search engine.
 
----
 
 ## Architecture Layers
 
@@ -58,6 +57,8 @@ This design enables real-time ingestion while preserving flexibility for downstr
 ## Security Considerations
 
 Sensitive configuration values, such as Kafka credentials and Elasticsearch access details, are stored in AWS Secrets Manager.
+
+![AWS_Secrets](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/aws_secrets.png)
 
 Secrets are retrieved securely at runtime by Airflow tasks, ensuring that credentials are not embedded in source code or configuration files.
 
