@@ -1,6 +1,6 @@
 # Local Airflow Testing Workflow
 
-## Startup Sequence
+Startup Sequence
 
 ```text
 airflow db migrate
