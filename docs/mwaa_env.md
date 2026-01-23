@@ -10,7 +10,7 @@ During MWAA environment creation, the following S3 paths must be configured corr
 - **DAG code** (e.g. `s3://<bucket>/dags/`)
 - **Python dependencies** via `requirements.txt` (e.g. `s3://<bucket>/requirements.txt`)
 
-> 📌 Screenshot: MWAA S3 configuration  
+> 📌 Screenshot: MWAA S3 configuration
 > ![MWAA_dag_S3_config](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/airflow_config.png)
 
 
@@ -34,7 +34,7 @@ If DAGs fail to appear in the Airflow UI or cannot be parsed, `CloudWatch logs` 
 
 Once the MWAA environment is ready and the DAG code is valid:
 
-> 📌 Screenshot: MWAA Environment is ready!
+> 📌 Screenshot: MWAA Environment is ready :)
 > ![mwaa_env](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/airflow_env_mwaa.png)
 
 - DAGs should appear automatically in the **Airflow UI**
@@ -46,7 +46,7 @@ Once the MWAA environment is ready and the DAG code is valid:
   - Producer DAG → publishes logs to Kafka
   - Consumer DAG → consumes Kafka logs and indexes into Elasticsearch
 
-> 📌 Screenshot: Logs successfully produced to the `AWS-MWAA-Production` Kafka topic
+> 📌 Screenshot: Logs successfully produced to the `AWS-MWAA-Production` Confluent Kafka topic
 > ![Kafka_logs](https://github.com/eriiinxxuu/mwaa-kafka-elasticsearch-project/blob/main/Images/kafka_overview.png)
 
 > 📌 Screenshot: Logs successfully consumed from Kafka and indexed into Elasticsearch (`aws-mwaa-production` index)

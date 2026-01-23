@@ -2,6 +2,12 @@
 
 > Apache Airflow (MWAA) · Kafka · Elasticsearch · CI/CD
 
+## Table of Contents
+- [Introduction](#Introduction)
+- [System Architecture](#system-architecture)
+- [Technologies](#technologies)
+- [Documentation](#documentation)
+
 ## 📚 Introduction
 
 This project demonstrates an end-to-end real-time log processing and analytics platform built with **Apache Airflow, Confluent Kafka, and Elasticsearch**.
