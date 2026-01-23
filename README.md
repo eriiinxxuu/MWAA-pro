@@ -64,8 +64,18 @@ Once deployed:
 
 Any code changes pushed to GitHub are automatically synchronized to S3 via GitHub Actions and reflected in the MWAA environment, enabling continuous delivery without manual intervention.
 
-## Documentation
+## 🧠 Technologies
+- **Apache Airflow**: Workflow orchestration for producing and consuming real-time log data
+- **AWS Managed Workflows for Apache Airflow (MWAA)**: Fully AWS managed Apache Airflow runtime in production
+- **Apache Kafka (Confluent Cloud)**: Distributed event streaming platform for real-time log ingestion
+- **Elasticsearch**: Search and analytics engine for indexing and querying log data
+- **AWS S3** — DAG and dependency storage
+- **AWS Secrets Manager** — Secure credential management
+- **GitHub Actions** — CI/CD automation
+- **Python**: Primary language for Airflow DAGs and data processing
 
+
+## 📝 Documentation
 
 - [System Architecture Details](docs/architecture.md)
 - [Producer & Consumer DAG Design](docs/dags.md)
