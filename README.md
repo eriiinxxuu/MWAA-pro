@@ -82,7 +82,7 @@ Any code changes pushed to GitHub are automatically synchronized to S3 via GitHu
 - [Producer & Consumer DAG Design](docs/dags.md)
 - [Local Development Guide](docs/local-airflow-testing.md)
 - [CI/CD pipeline](docs/cicd.md)
-- [AWS MWAA Environment](docs/mwaa_env.md)
+- [AWS MWAA Environment](docs/mwaa_env.md) (steps by steps 💗)
 
 
 
