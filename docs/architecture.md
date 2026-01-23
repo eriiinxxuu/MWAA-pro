@@ -17,7 +17,6 @@ The architecture is divided into three logical layers:
 Developers author and validate Airflow DAGs locally using an IDE and a local Apache Airflow instance.  
 This layer enables rapid iteration and end-to-end validation before any code is deployed to the cloud environment.
 
----
 
 ### 2. CI/CD Automation
 
@@ -25,7 +24,6 @@ GitHub Actions provides automated deployment by synchronizing Airflow DAGs and d
 
 This layer acts as the bridge between local development and the MWAA runtime, ensuring that only validated code is promoted to production.
 
----
 
 ### 3. Cloud Runtime (AWS MWAA)
 
@@ -33,7 +31,6 @@ AWS Managed Workflows for Apache Airflow (MWAA) serves as the production executi
 
 MWAA continuously loads DAG definitions and dependencies from Amazon S3 and executes workflows according to their schedules or manual triggers.
 
----
 
 ## Component Interaction
 
@@ -45,7 +42,6 @@ At runtime, the system consists of the following core components:
 
 Each component is loosely coupled, allowing independent scaling and clear responsibility boundaries.
 
----
 
 ## Data Flow
 
@@ -58,7 +54,6 @@ The end-to-end data flow follows a streaming pattern:
 
 This design enables real-time ingestion while preserving flexibility for downstream analytics.
 
----
 
 ## Security Considerations
 
@@ -67,8 +62,6 @@ Sensitive configuration values, such as Kafka credentials and Elasticsearch acce
 Secrets are retrieved securely at runtime by Airflow tasks, ensuring that credentials are not embedded in source code or configuration files.
 
 
-
----
 
 ## Design Decisions
 
@@ -86,5 +79,5 @@ Several key design decisions guided the architecture:
 - **Cloud-managed orchestration**  
   MWAA reduces operational overhead while providing a production-grade Airflow environment.
 
----
+
 
