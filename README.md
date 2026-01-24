@@ -17,7 +17,7 @@ The architecture consists of three major layers:
 - CI/CD Automation with GitHub Actions
 - Cloud Runtime on Amazon Managed Workflows for Apache Airflow (MWAA)
 
-### 1. Local Development & Secure Configuration
+### 1. Local Development and DAG Workflow Design
 Development is performed locally using IDE environment and a local Apache Airflow instance.
 
 Two Airflow DAGs are implemented:
@@ -36,6 +36,8 @@ On each scheduled run:
 - The `logs_producer DAG` generates and publishes **15,000** synthetic log messages to Kafka.
 - The `logs_processing_pipeline DAG` reads the latest available messages and indexes the collected batch into Elasticsearch using a bulk write operation.
 
+Both DAGs are configured with `catchup=False`, ensuring that only the most recent scheduling window is executed. \
+This prevents historical backfills and aligns with the project’s near real-time log processing model.
 
 ### 2. Local Airflow Testing Workflow
 
