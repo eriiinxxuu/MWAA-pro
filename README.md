@@ -30,7 +30,12 @@ Generates synthetic access logs and publishes them to Kafka as the upstream sour
 
 Consumes Kafka messages, parses and normalizes log data, and indexes structured records into Elasticsearch for analytics.
 
-All secrets required in DAGs tasks are stored in **AWS Secrets Manager**, ensuring credentials are managed securely and centrally.
+Both the producer and consumer DAGs are scheduled to run every 5 minutes (`*/5 * * * *`).
+
+On each scheduled run:
+- The `logs_producer DAG` generates and publishes **15,000** synthetic log messages to Kafka.
+- The `logs_processing_pipeline DAG` reads the latest available messages and indexes the collected batch into Elasticsearch using a bulk write operation.
+
 
 ### 2. Local Airflow Testing Workflow
 
