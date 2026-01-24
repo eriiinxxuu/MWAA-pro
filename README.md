@@ -25,7 +25,6 @@ Two Airflow DAGs are implemented:
 
 Generates synthetic access logs and publishes them to Kafka as the upstream source of the log analytics pipeline.
 
-
 - **Consumer DAG** 
 
 Consumes Kafka messages, parses and normalizes log data, and indexes structured records into Elasticsearch for analytics.
