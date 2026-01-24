@@ -17,7 +17,7 @@ The architecture consists of three major layers:
 - CI/CD Automation with GitHub Actions
 - Cloud Runtime on Amazon Managed Workflows for Apache Airflow (MWAA)
 
-### 1. Local Development and DAG Workflow Design
+### 1. Local Development and Workflow Design
 Development is performed locally using IDE environment and a local Apache Airflow instance.
 
 Two Airflow DAGs are implemented:
