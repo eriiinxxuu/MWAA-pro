@@ -1,5 +1,7 @@
 # Producer & Consumer DAG Design
 
+### Log Production and Consumption Workflows
+
 > **Producer DAG** 
 
 The Producer DAG simulates real-world application traffic by generating synthetic access logs and streaming them to Kafka in real time, serving as the upstream source of the log analytics pipeline. \
@@ -41,3 +43,31 @@ Before indexing, timestamps are converted into ISO 8601 format
 By normalizing timestamps at the consumer level, the system guarantees that downstream analytics operate on consistent and query-friendly time representations.
 
 All secrets required in DAGs tasks are stored in **AWS Secrets Manager**, ensuring credentials are managed securely and centrally.
+
+### Scheduling and Message Processing Model
+
+Both workflows are triggered every 5 minutes (`*/5 * * * *`, `catchup=False`).
+
+#### Producer DAG
+
+On each scheduled run, the Producer DAG generates **15,000** synthetic access log messages. \
+Log messages are published to Kafka **one message at a time** using the Kafka producer API. \
+Although messages are produced individually, they collectively form a logical batch representing a single execution window. \
+This approach simulates real-world application traffic, where events are emitted continuously rather than as a single payload.
+
+#### Consumer DAG
+
+The Consumer DAG reads messages from Kafka using a consumer group configured with `auto.offset.reset = latest`.
+
+During each scheduled run:
+- Messages are polled sequentially from Kafka
+- Parsed log records are accumulated in memory
+- Once the batch size reaches **15,000 messages**, the logs are indexed into Elasticsearch using a **bulk write operation**
+
+This design balances streaming ingestion from Kafka with efficient batch indexing into Elasticsearch.
+
+> #### Kafka Offset Management Strategy
+
+The consumer is configured with `auto.offset.reset = latest`, meaning that it starts consuming from the most recent messages available at runtime.
+This configuration is intentional and aligns with the project’s goal of validating **near real-time log processing** rather than historical reprocessing. \
+The system focuses on consuming logs generated during the current scheduling window, avoiding replay of older messages across DAG executions.
